@@ -1,0 +1,109 @@
+{% extends "baseProfile.html" %} {% load static %} {% block title %}
+<title>Team Members</title>
+<link rel="stylesheet" href="{% static 'css/teamMembers.css' %}" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins&family=Roboto&display=swap"
+  rel="stylesheet"
+/>
+<link
+  href="https://api.fontshare.com/css?f[]=satoshi@400,700&display=swap"
+  rel="stylesheet"
+/>
+{% endblock title %} {% block content %}
+<div class="teamMembers">
+  <div class="team-container">
+    <div class="top1">
+      <div class="heading">Team Members</div>
+      <div class="edit1"></div>
+    </div>
+    <div class="search-container">
+      <div class="search">
+        <input
+          type="text"
+          placeholder="Search members"
+          id="searchInput"
+          onkeyup="performSearch()"
+        />
+        <button type="submit">
+          <img src="{% static 'imgs/Vector (1).png' %}" />
+        </button>
+      </div>
+      <div class="team-no">Current Team:</div>
+    </div>
+    <div class="members">
+      <a class="member add" href="{% url 'add_member' %}">
+        <img src="{% static 'imgs/Group 1.png' %}" />Add Members</a
+      >
+      {% for member in members %}
+      <div class="member">
+        <img src="{% static 'imgs/image 3.png' %}" />
+        <div style="width:80%">
+          <div style="display: flex; justify-content: space-between">
+            <span style="font-weight: bold">{{member.name}}</span>
+            <div>
+              <button
+                style="
+                  border: none;
+                  background-color: #c4c9a0;
+                  margin-left: 2vw;
+                  font-size: 2vw;
+                "
+              >
+                <a
+                  href="{% url 'edit_member' member_id=member.id %}"
+                  style="text-decoration: none"
+                  ><img style="width: 4vw; height: 4vw; max-width: 20px;max-height: 20px;" src="{% static 'icons/edit.png' %}"></img></a
+                >
+              </button>
+              {% comment %} <button
+                style="border: none; background-color: #c4c9a0; font-size: 2vw"
+              >
+                <a
+                  href="{% url 'delete_member' member_id=member.id %}"
+                  style="text-decoration: none"
+                  >🗑️</a
+                >
+              </button> {% endcomment %}
+            </div>
+          </div>
+          {{member.email}}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var teamContainer = document.querySelector(".team-container");
+    var teamCountElement = teamContainer.querySelector(".team-no");
+    var memberElements = teamContainer.querySelectorAll(".member");
+    updateTeamCount();
+    function updateTeamCount() {
+      var currentTeamCount = memberElements.length-1;
+      teamCountElement.textContent = "Current Team: " + currentTeamCount;
+    }
+  });
+
+  //FILTER Members:
+  const searchInput = document.getElementById("searchInput");
+  const membersContainer = document.getElementsByClassName(".members");
+  const memberBox = document.querySelectorAll(".member");
+  function performSearch() {
+    const searchValue = searchInput.value.toLowerCase();
+    for (let i = 1; i < memberBox.length; i++) {
+      let member = memberBox[i].getElementsByTagName("span")[0];
+      if (member) {
+        let memberName = member.innerText;
+        if (memberName.toLowerCase().indexOf(searchValue) > -1) {
+          memberBox[i].style.display = "";
+        } else {
+          memberBox[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
+{% endblock content %}

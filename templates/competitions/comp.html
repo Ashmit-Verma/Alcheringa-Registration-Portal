@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <title>Register | {{ competition.event_name }}</title>
+
+    <!-- <link rel="stylesheet" href="{% static 'css/global.css' %}"> -->
+
+    <link rel="stylesheet" href="{% static 'css/comp.css' %}" />
+    <link rel="icon" type="image/x-icon" href="{% static 'imgs/Group 26.png' %}" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" />
+  </head>
+  <body>
+    <section class="register-page">
+      <div class="logo">
+        <a href="{% url 'home' %}"><img src="{% static 'imgs/home/logo.png' %}" alt="Alcher Logo" /></a>
+      </div>
+      <div class="action">
+        <div class="profile" onclick="menuToggle();">
+          <img src="{{ request.user.img.url }}" alt="profile" />
+        </div>
+        <div class="menu">
+          <h3>{{ user.username }}<br /><span>{{ user.fullname }}</span></h3>
+          <ul>
+            <li>
+              <a href="{% url 'profile' %}">My Profile</a>
+            </li>
+            <li>
+              <a href="{% url 'RegisteredEvents' %}">My Registrations</a>
+            </li>
+            <li>
+              <a href="{% url 'TeamMembers' %}">Team Members</a>
+            </li>
+            <li>
+              <a href="https://drive.google.com/file/d/1PAqqbBIwJYGvaWShECjWuQd9e1FuXh9E/view?usp=sharing" target="_blank">RuleBook</a>
+            </li>
+            <li>
+              <img src="{% static 'imgs/home/logout.png' %}" alt="logout" /><a href="{% url 'logout' %}">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="vector-parent">
+        <a href="{% url 'home' %}">
+          <img class="arrow-icon" alt="" src=" {% static 'imgs/public/arrow-7.svg' %}" />
+          &nbsp; Back
+        </a>
+      </div>
+      <div class="container">
+        <img alt="{{ image.alt }}" src="{{ competition.image.url }}" />
+      </div>
+      <div class="header_container">
+        <h1 class="competition-name">{{ competition.event_name }}</h1>
+        <div class="guidelines-btn" onclick="togglePopup1()">
+          <button data-modal-target="#popUp_g1" type="button">
+            GUIDELINES &nbsp<svg width="2vw" height="2vw" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="SVGRepo_bgCarrier" stroke-width="1.5"></g>
+              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+              <g id="SVGRepo_iconCarrier">
+                <rect width="48" height="48" fill="white" fill-opacity="0.01"></rect>
+                <path d="M19 11H37V29" stroke="#B5BC89" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M11.5441 36.4559L36.9999 11" stroke="#B5BC89" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+              </g>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="form-container">
+        <form id="registrationForm" method="POST" class="container2">
+          {% csrf_token %}
+
+          <h2 class="module">{{ competition.module }}</h2>
+          <h2 class="compprize"><span>Prize worth</span> {{ competition.prize_worth }}K+</h2>
+          <div class="event_desc">{{ competition.event_desc }}</div>
+
+          <div class="info">
+            <div class="group-upto-x">
+              <img alt="group_icon" src="{% static 'imgs/public/icon (2).png' %}" />{{ competition.solo_or_group }}
+            </div>
+            <div class="on-ground">
+              <img alt="location_icon" src="{% static 'imgs/public/vector.svg' %}" />
+              {% if competition.online %}
+                Online
+              {% else %}
+                On Ground
+              {% endif %}
+            </div>
+          </div>
+          <div class="add-members-min">
+            Add Members{% if competition.max_members == 1 %}
+              (Solo)
+            {% elif competition.max_members > 50 %}
+              (Min {{ competition.min_members }})
+            {% else %}
+              (Min {{ competition.min_members }} - Max {{ competition.max_members }})
+            {% endif %}
+          </div>
+          <input type="hidden" id="members" name="members" value="" required />
+          <div class="selected-container" data-modal-target="#popUp_add">
+            Add Member(s)<div class="add-img">
+              <img src="{% static 'imgs/public/plus icon 3.png' %}" class="add-button" />
+            </div>
+          </div>
+          <div class="add-members-parent">
+            <div class="add-members"></div>
+            <div class="group-child"></div>
+          </div>
+          {% if competition.max_members != 1 %}
+            <div class="group">
+              <b class="previous-performances">Team Name</b>
+              <div class="form-group">
+                <input type="text" name="team_name" id="email" placeholder="Team Name " required />
+              </div>
+            </div>
+          {% endif %}
+          {% if comp.showPeformanceLink %}
+            <div class="group">
+              <b class="previous-performances">Previous Performance(s)</b>
+              <div class="form-group">
+                <input type="text" name="link" id="email" placeholder="Submit your brief performance(e.g.,Google Drive link)
+              " required />
+              </div>
+            </div>
+            <div class="group2">
+              <b class="description">Description</b>
+              <div class="form-group">
+                <input type="text" name="description" id="email1" placeholder="write a brief description of your performance" required />
+              </div>
+            </div>
+          {% endif %}
+          <div class="note">
+            <h3>Note</h3>
+            <p>Our team will review and if everything is in order, your entry will be approved. As and when your entry is approved, you will be notified via mail.</p>
+          </div>
+          <div class="submitBtn">
+            <div onclick="submitForm()" class="submit">Submit</div>
+          </div>
+        </form>
+      </div>
+
+      <div class="popUp_g1 popUp" id="popUp_g1">
+        <div class="popUp-header">
+          <div class="popUptitle">Competition Guidelines</div>
+          {% comment %} <button data-close-button class="closeBtn">×</button> {% endcomment %}
+        </div>
+        <hr />
+        <div class="popUp-body">{{ competition.event_rules|linebreaks }}</div>
+      </div>
+      <div id="overlay"></div>
+
+      <div class="popUp_g2 popUp" id="popUp_g2">
+        <div class="popUp-header">
+          <div class="popUptitle">Competition Guidelines</div>
+          {% comment %} <a class="closeBtn" id="closeBtn" href="{% url 'home' %}" style="text-decoration: none">×</a> {% endcomment %}
+        </div>
+        <hr />
+        <div class="popUp-body">{{ competition.event_rules|linebreaks }}</div>
+        <div class="agreeBtn">
+          <button data-agree-button>Agree</button>
+        </div>
+      </div>
+
+      <div class="popUp_add popUp" id="popUp_add">
+        <div class="add_header">
+          <div class="add_title">MEMBERS</div>
+
+          <button data-close-button class="closeBtn2">Done</button>
+        </div>
+        <div style="display: flex; align-items: center;">
+          <span class="dot">•</span>
+          <span class="selection-info">0 out of 0 members selected</span>
+        </div>
+        <div class="searchMember">
+          <input type="text" placeholder="search members" id="searchInput" onkeyup="performSearch()" />
+        </div>
+        <div class="memberContainer">
+          {% for member in team.members.all %}
+            <div class="team_member_box">
+              <div class="team_member 
+              {% comment %} {% if member.id in members_reg %}{% endif %} {% endcomment %}
+              " data-member-id="{{ member.id }}">
+                <div class="clickable-member-box">{{ member.name }}</div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="addMember">
+          <div class="addMemBtn">
+            <a href="{% url 'add_member' competition.id %}">Add member</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="alertMsg1">
+        <h2>
+          <svg fill="#0A2628" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 478.125 478.125" xml:space="preserve">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <g>
+                <g>
+                  <g>
+                    <circle cx="239.904" cy="314.721" r="35.878"></circle>
+                    <path d="M256.657,127.525h-31.9c-10.557,0-19.125,8.645-19.125,19.125v101.975c0,10.48,8.645,19.125,19.125,19.125h31.9 c10.48,0,19.125-8.645,19.125-19.125V146.65C275.782,136.17,267.138,127.525,256.657,127.525z"></path>
+                    <path d="M239.062,0C106.947,0,0,106.947,0,239.062s106.947,239.062,239.062,239.062c132.115,0,239.062-106.947,239.062-239.062 S371.178,0,239.062,0z M239.292,409.734c-94.171,0-170.595-76.348-170.595-170.596c0-94.248,76.347-170.595,170.595-170.595 s170.595,76.347,170.595,170.595C409.887,333.387,333.464,409.734,239.292,409.734z"></path>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>&nbsp; Please fill in both the link and description fields
+        </h2>
+      </div>
+      <div class="alertMsg2">
+        <h2>
+          <svg fill="#0A2628" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 478.125 478.125" xml:space="preserve">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <g>
+                <g>
+                  <g>
+                    <circle cx="239.904" cy="314.721" r="35.878"></circle>
+                    <path d="M256.657,127.525h-31.9c-10.557,0-19.125,8.645-19.125,19.125v101.975c0,10.48,8.645,19.125,19.125,19.125h31.9 c10.48,0,19.125-8.645,19.125-19.125V146.65C275.782,136.17,267.138,127.525,256.657,127.525z"></path>
+                    <path d="M239.062,0C106.947,0,0,106.947,0,239.062s106.947,239.062,239.062,239.062c132.115,0,239.062-106.947,239.062-239.062 S371.178,0,239.062,0z M239.292,409.734c-94.171,0-170.595-76.348-170.595-170.596c0-94.248,76.347-170.595,170.595-170.595 s170.595,76.347,170.595,170.595C409.887,333.387,333.464,409.734,239.292,409.734z"></path>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>&nbsp; Please add members in desired range
+        </h2>
+      </div>
+
+      <div id="minMembers" style="display: none">{{ Competition.min_members }}</div>
+      <div id="maxMembers" style="display: none">{{ Competition.max_members }}</div>
+      <div id="compid" style="display: none;">{{ competition.id }}</div>
+
+      <!--                        <div class="popup" id="popup-1">
+    <div class="content">
+
+      <body translate="no">
+        <input type="text" class="search-input" placeholder="Search Members">
+       
+        <span class="dot"></span>
+        <div class="selection-info">0 out of 0 members selected</div>
+        <div class="member">MEMBERS</div>
+        <div class="allmembers">
+        <div class="all_members">
+          {% for member in team.members.all %}
+              <div class="team_member_box">
+                  <div class="team_member {% if member.id in members_reg %} selected {% endif %}" data-member-id="{{ member.id }}">
+                      <div class="clickable-member-box">
+                          {{ member.name }}
+                      </div>
+                  </div>
+              </div>
+          {% endfor %}
+      </div>
+      
+    </div>
+
+
+      <div class="close-btn" onclick="togglePopup2()">
+        ×</div>
+    </div>
+  </div>
+  
+  <div class="popup1">
+    <div class="popup-content">
+      <button class="agree">Agree</button>
+      
+
+
+        <b class="competition-guidelines">Competition Guidelines</b>
+      <div class="complete-your-profile-container">
+        <p class="complete-your-profile1">
+          1. Complete your profile by filling all the details in the Profile" tab,<br>
+          2. Add members to your team in the "Members" tab, if required.<br>
+          3. Now, click on to Competitions" tab to register for the events. <br>
+          4. Select your particular event and hit 'Register button. <br>
+          5. Select the individuals participating in that event. <br>
+          6. In events, it will prompt you to provide the link of your  performance. <br> In that case, upload the video file on your Google drive and paste the sharing link.
+        </p>
+        <div class="guidelines-item"></div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  Blurred Overlay
+  <div class="blur" id="blur"></div>
+
+  Popup
+  <div class="popup" id="popup-2">
+    <div class="content2">
+
+      
+      <div class="close-btn" onclick="togglePopup1()">
+
+        
+        ×
+      </div>
+
+      <b class="competition-guidelines">Competition Guidelines</b>
+      <div class="complete-your-profile-container">
+        <p class="complete-your-profile1">
+          1. Complete your profile by filling all the details in the Profile"
+          tab,
+        </p>
+        <p class="complete-your-profile2">
+          2. Add members to your team in the "Members" tab, if required.
+        </p>
+        <p class="complete-your-profile3">
+          3. Now, click on to Competitions" tab to register for the events.
+        </p>
+        <p class="complete-your-profile4">
+          4. Select your particular event and hit 'Register button.
+        </p>
+        <p class="complete-your-profile5">
+          5. Select the individuals participating in that event.
+        </p>
+        <p class="complete-your-profile6">
+          6. In events, it will prompt you to provide the link of your performance.
+          <br> In that case, upload the video file on your Google drive and paste the<br> sharing link.
+          
+         
+        </p>
+
+        <div class="guidelines-item"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="popup" id="popup-1">
+    <div class="content">
+
+
+      <div class="close-btn" onclick="togglePopup2()">
+        ×
+      </div>
+
+    </div>
+  </div>                        -->
+    </section>
+
+    {% comment %} <footer class="footer">
+      <div class="footer-left">
+        <img src="{% static 'imgs/home/Frame 167.png' %}" alt="Company logo" />
+        <!-- <img src="{% static 'imgs/home/Vector_footer.png' %}" alt="Company logo"> -->
+      </div>
+      <div class="footer-right">
+        <a href="#"><img src="{% static 'imgs/home/Ellipse 24.png' %}" alt="Facebook icon" /></a>
+        <a href="#"><img src="{% static 'imgs/home/Ellipse 24.png' %}" alt="Twitter icon" /></a>
+        <a href="#"><img src="{% static 'imgs/home/Ellipse 24.png' %}" alt="Instagram icon" /></a>
+        <a href="#"><img src="{% static 'imgs/home/Ellipse 24.png' %}" alt="LinkedIn icon" /></a>
+      </div>
+    </footer> {% endcomment %}
+
+    {% include 'footer.html' %}
+
+    <script>
+      function menuToggle() {
+        const toggleMenu = document.querySelector('.menu')
+        toggleMenu.classList.toggle('active')
+      }
+      
+      //------------- Popup opening and closing js------------------------------
+      const openModalButtons = document.querySelectorAll('[data-modal-target]')
+      const closeModalButtons = document.querySelectorAll('[data-close-button]')
+      const overlay = document.getElementById('overlay')
+      
+      openModalButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const modal = document.querySelector(button.dataset.modalTarget)
+          openModal(modal)
+        })
+      })
+      
+      overlay.addEventListener('click', () => {
+        const modals = document.querySelectorAll('.popUp.active')
+        modals.forEach((modal) => {
+          closeModal(modal)
+        })
+      })
+      
+      closeModalButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const modal = button.closest('.popUp')
+          closeModal(modal)
+        })
+      })
+      function openModal(modal) {
+        if (modal == null) return
+        modal.classList.add('active')
+        overlay.classList.add('active')
+      }
+      function closeModal(modal) {
+        if (modal == null) return
+        modal.classList.remove('active')
+        overlay.classList.remove('active')
+      }
+      document.addEventListener('DOMContentLoaded', () => {
+        const popUp = document.querySelector('.popUp_g2')
+        const agree = document.querySelector('[data-agree-button]')
+        const overlay = document.getElementById('overlay')
+        if (!localStorage.getItem(document.getElementById('compid').innerHTML)) {
+          window.addEventListener('load', () => {
+            popUp.classList.add('active')
+            overlay.classList.add('active')
+          })
+        }
+      
+        agree.addEventListener('click', () => {
+          localStorage.setItem(document.getElementById('compid').innerHTML, 'true')
+          popUp.classList.remove('active')
+          overlay.classList.remove('active')
+        })
+      })
+      
+      //------------------adding members js---------------------
+      document.addEventListener('DOMContentLoaded', () => {
+        const teamMembers = document.querySelectorAll('.team_member')
+        const totalMemCount = teamMembers.length
+        const selectionInfo = document.querySelector('.selection-info')
+        selectionInfo.textContent = `0 out of ${totalMemCount} members selected`
+        teamMembers.forEach((member) => {
+          const clickableBox = member.closest('.team_member')
+          clickableBox.addEventListener('click', () => {
+            member.classList.toggle('selected')
+            updateSelectedContainer()
+          })
+        })
+      
+        function updateSelectedContainer() {
+          const selectedContainer = document.querySelector('.selected-container')
+          selectedContainer.innerHTML = `<div class="add-img"><img src="{% static 'imgs/public/plus icon 3.png' %}" class="add-button"></div>`
+          const addImg = document.querySelector('.add-img')
+          addImg.style.opacity = '1'
+          const selectedMembers = document.querySelectorAll('.team_member.selected')
+          selectedMembers.forEach((selectedMember) => {
+            const selectedClone = selectedMember.closest('.team_member_box').cloneNode(true)
+            selectedClone.style.height = '4vh'
+            selectedClone.style.width = '25vh'
+            selectedClone.style.transform = 'translate(0, -30%)'
+            selectedContainer.appendChild(selectedClone)
+            selectedContainer.style.justifyContent = 'flex-start'
+          })
+      
+          const selectedMemCount = selectedMembers.length
+          selectionInfo.textContent = `${selectedMemCount} out of ${totalMemCount} members selected`
+        }
+      })
+      
+      //search members:
+      const searchInput = document.getElementById('searchInput')
+      const MemContainer = document.getElementsByClassName('.memberContainer')
+      const rectangleBox = document.querySelectorAll('.team_member_box')
+      // const eventNameElements = document.querySelectorAll('.eventName');
+      // const competitions = Array.from(eventNameElements).map(element => element.innerText);
+      function performSearch() {
+        const searchValue = searchInput.value.toLowerCase()
+        for (let i = 0; i < rectangleBox.length; i++) {
+          let member = rectangleBox[i].getElementsByClassName('clickable-member-box')[0]
+          if (member) {
+            let memberName = member.innerText
+            if (memberName.toLowerCase().indexOf(searchValue) > -1) {
+              rectangleBox[i].style.display = ''
+            } else {
+              rectangleBox[i].style.display = 'none'
+            }
+          }
+        }
+      }
+      
+      // Submit form function ---->
+      
+      function emptyFieldAlert() {
+        alertMsg = document.querySelector('.alertMsg1')
+        alertMsg.classList.add('active')
+      
+        setTimeout(function () {
+          alertMsg.classList.remove('active')
+        }, 5000)
+      }
+      
+      function emptyFieldAlert2() {
+        alertMsg = document.querySelector('.alertMsg2')
+        alertMsg.classList.add('active')
+      
+        setTimeout(function () {
+          alertMsg.classList.remove('active')
+        }, 5000)
+      }
+      
+      function submitForm() {
+        const memberInput = document.getElementById('members')
+        const selectedMembers = document.querySelectorAll('.team_member.selected')
+        const membersArray = Array.from(selectedMembers).map((member) => {
+          return {
+            id: member.dataset.memberId,
+            name: member.textContent.trim()
+          }
+        })
+        memberInput.value = JSON.stringify(membersArray) || null
+      
+        // Get the link and description input fields
+
+      
+        // check if the members are in the range
+        var min_members = parseInt('{{competition.min_members}}')
+        var max_members = parseInt('{{competition.max_members}}')
+        console.log(selectedMembers.length)
+        if (selectedMembers.length / 2 < min_members || selectedMembers.length / 2 > max_members) {
+          console.log(selectedMembers.length)
+      
+          emptyFieldAlert2()
+          return false
+        }
+        {% if competition.showPeformanceLink %}
+        const linkInput = document.querySelector('input[name="link"]')
+        const descriptionInput = document.querySelector('input[name="description"]')
+        // Check if the link and description fields are empty
+        if (!linkInput.value.trim() || !descriptionInput.value.trim()) {
+          emptyFieldAlert()
+          return false // Stop the function if any of the fields are empty
+        }
+        {% endif %}
+      
+        // Construct the URL where you want to redirect
+        const form = document.getElementById('registrationForm')
+        form.submit()
+      }
+    </script>
+    <!--                        <script>
+      function togglePopup1() {
+        var blur = document.getElementById("blur");
+        var popup = document.getElementById("popup-2");
+
+        blur.classList.toggle("active");
+        popup.classList.toggle("active");
+      }
+    </script>
+
+
+    <script>
+      function togglePopup2() {
+        var blur = document.getElementById("blur");
+        var popup = document.getElementById("popup-1");
+
+        blur.classList.toggle("active");
+        popup.classList.toggle("active");
+      }
+    </script>
+
+    <script>
+      const addButton = document.getElementById("add-button");
+      const selectedContainer = document.querySelector(".selected-container");
+      const addMembersMin = document.querySelector(".add-members-min");
+
+      addButton.addEventListener("click", function () {
+        selectedContainer.classList.toggle("hidden");
+        addMembersMin.classList.toggle("hidden");
+      });
+
+      addButton.addEventListener("click", function () {
+        addMembersMin.classList.add("hidden");
+      });
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const languageSelect = document.getElementById('languageSelect');
+        const selectedContainer = document.querySelector('.selected-container');
+        const addButton = document.getElementById('add-button');
+
+        addButton.addEventListener('click', () => {
+          const selectedOptions = Array.from(languageSelect.selectedOptions);
+
+          selectedOptions.forEach(option => {
+            const optionText = option.text;
+            const selectedOption = document.createElement('div');
+            selectedOption.classList.add('selected-option');
+            selectedOption.textContent = optionText;
+            selectedContainer.appendChild(selectedOption);
+
+          });
+        });
+      });
+
+       document.addEventListener('DOMContentLoaded', () => {
+    const teamMembers = document.querySelectorAll('.team_member');
+
+    teamMembers.forEach(member => {
+        const clickableBox = member.querySelector('.clickable-member-box');
+
+        clickableBox.addEventListener('click', () => {
+            member.classList.toggle('selected');
+            updateSelectedContainer();
+        });
+    });
+
+    function updateSelectedContainer() {
+        const selectedContainer = document.querySelector('.selected-container');
+        selectedContainer.innerHTML = '';
+
+        const selectedMembers = document.querySelectorAll('.team_member.selected');
+
+        selectedMembers.forEach(selectedMember => {
+            
+            const selectedClone = selectedMember.querySelector('.clickable-member-box').cloneNode(true);
+             selectedClone.style.backgroundColor='#B5BC89';
+             selectedClone.style.textAlign='center';
+
+            selectedContainer.appendChild(selectedClone);
+        });
+
+        const selectionInfo = document.querySelector('.selection-info');
+        const selectedCount = selectedMembers.length;
+        const totalCount = teamMembers.length;
+        selectionInfo.textContent = `${selectedCount} out of ${totalCount} members selected`;
+    }
+  });
+</script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+  $(document).ready(function() {
+    const popup = $('.popup1');
+    const x = $('.popup-content .agree');
+    const storageKey = 'popupShown';
+
+    $(window).on('load', function() {
+      if (!sessionStorage.getItem(storageKey)) {
+        popup.addClass('showPopup');
+        popup.find('.popup-content').addClass('showPopup');
+        sessionStorage.setItem(storageKey, 'true');
+      }
+    });
+
+    x.on('click', function() {
+      popup.removeClass('showPopup');
+      popup.find('.popup-content').removeClass('showPopup');
+    });
+  });
+</script>                        -->
+
+    <!--                        <script>
+  function submitForm() {
+    const membersInput = document.getElementById('members');
+    const selectedMembers = document.querySelectorAll('.team_member.selected');
+    const membersArray = Array.from(selectedMembers).map(member => {
+        return { id: member.dataset.memberId, name: member.textContent.trim() };
+    });
+    membersInput.value = JSON.stringify(membersArray);
+
+    // Get the link and description input fields
+    const linkInput = document.querySelector('input[name="link"]');
+    const descriptionInput = document.querySelector('input[name="description"]');
+
+    // Check if the link and description fields are empty
+    if (!linkInput.value.trim() || !descriptionInput.value.trim()) {
+        alert('Please fill in both the link and description fields.');
+        return; // Stop the function if any of the fields are empty
+    }
+
+    // Construct the URL where you want to redirect
+    const redirectUrl = 'RegisteredEvents'; // Replace with your actual URL
+
+    // Redirect to the desired page
+    window.location.href = redirectUrl;
+}
+</script>                        -->
+  </body>
+</html>

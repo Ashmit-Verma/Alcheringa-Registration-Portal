@@ -1,0 +1,112 @@
+{% extends "baseProfile.html" %}
+{% load static %}
+        {% block title %}
+        <title>My Profile</title>
+        <link rel="stylesheet" href="{% static 'css/profile_edit.css' %}"> 
+        {% endblock title %}
+        {% block content %}
+        <style>
+            #id_phone_number_0{
+                width:5vw;
+                background-color: #b5bc89;
+                border:none;
+            }
+            #id_alternate_phone_0{
+                width:5vw;
+                background-color: #b5bc89;
+                border:none;
+            }
+        </style>
+            <div class="sub-container">
+                <div class="circle">
+                    <div class="dp">
+                        <img id="dp-set"  alt="profile pic"  src="{{request.user.img.url}}">
+                    <button class="img_edit" onclick="dpupload()">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path
+                            d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                        </svg>
+                    </button>
+                    </div>
+                    <div class="username">{{ request.user.username }}</div>
+                    <div class="ID">{{ request.user.alcherid }}</div>
+                </div>
+                
+                
+                <div class="allDetails">
+                    <form method="POST" enctype="multipart/form-data" class="">{% csrf_token %}
+                    <div style="height:0px;overflow:hidden">
+                        {{ form.img }}
+                    </div>
+                    <div class="details fullname">
+                        Full name*
+                        <div> {{ form.fullname }}</div>
+                    </div>
+
+                    <div class="details email">
+                        Email id*
+                        <div>{{ request.user.email }}</div>
+                    </div>
+
+                    <div class="phnblock">
+                        <div class="details">
+                            Phone no*
+                            <div style="display: flex;">{{ form.phone_number }}</div>
+                        </div>
+                        <div class="details two">
+                            Alternate Phone no
+                            <div style="display: flex;">{{ form.alternate_phone }}</div>
+                        </div>
+                    </div>
+                   
+                    <div class="details gender">
+                        Gender
+                        <div>{{ form.gender }}</div>
+                    </div>
+
+
+                    <div class="phnblock">
+
+                        <div class="details state">
+                            STATE
+                            <div>{{form.state}}</div>
+                        </div>
+                        <div class="details city two">
+                            CITY
+                            <div>{{ form.city }}</div>
+                        </div>
+        
+                    </div>
+
+                    <div class="phnblock">
+
+                        <div class="details college">
+                            COLLEGE
+                            <div>{{ form.collegename }}</div>
+                        </div>
+                        <div class="details teamname two">
+                            TEAM NAME
+                            <div>{{form.teamname}}</div>
+                        </div>
+        
+                    </div>
+                    <!-- <div style="height:0px; overflow:hidden">
+                        {{form.interest}}</div> -->
+                    
+                    <!-- <div class="details ">
+                        INTEREST
+                        <div class="rects" id="chip-interest">
+                            <div class="rectangle">Module name</div>
+                            <div class="rectangle">Module name</div>
+                            <div class="rectangle">Module name</div>
+                            <div class="rectangle">Module name</div>
+                        </div>
+                    </div> -->
+                    <div class="save">
+                        <input type="submit" value="SAVE">
+                    </div>
+                </div>    
+                </form>
+            </div>
+        {% endblock content %}

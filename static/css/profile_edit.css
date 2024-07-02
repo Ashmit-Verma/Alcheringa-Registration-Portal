@@ -1,0 +1,319 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Roboto:wght@400;500;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.sub-container{
+    z-index: 1;
+    min-height: 1vh;
+    height: auto;
+    width: 56%;
+    background-color: #B5BC89;
+    margin: auto ;
+    padding: 2%;
+    /* padding-bottom: 10vh; */
+    font-family: sans-serif;
+    position: relative;
+    font-weight: 530;
+    font-size: 20px;
+    margin-top: 10vh;
+    margin-bottom: 5vh;
+}
+.dp{
+    position: relative;
+}
+.img_edit{
+    width: 3vw;
+    height: 3vw;
+    position: absolute;
+    bottom: 2vh;
+    right: 0.5vh;
+    cursor: pointer;
+    border-radius: 50%;
+    border: none;
+    background: rgb(205, 205, 205);
+}
+/* .save {
+    display: inline-block;
+} */
+.save input {
+    min-width: 1vw;
+    width: 19%;
+    height: 6vh;
+    font-size: 1em;
+    font-weight: 700;
+    color: #0A2628;
+    border: 2px solid #0A2628;
+    cursor: pointer;
+    background-color: rgb(149, 153, 114);
+    padding: 5px;
+    margin: 7vh 0 0 0;
+}
+.save input:active{
+    background-color: #B5BC89;
+}
+.save input:after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.circle .username{
+    width: fit-content;
+    font-size: 2vw;
+    margin: 2vh auto auto auto;
+}
+.circle .ID{
+    width: fit-content;
+    margin: auto;
+    font-size: 1.2vw;
+}
+.circle {
+    width: fit-content;
+    margin: auto;
+    margin-top: -18%;
+}
+.circle img{
+    height: 15vw;
+    width: 15vw;
+    border-radius: 50%;
+}
+@media(max-width:900px){
+    .circle img{
+        height: 19vw;
+        width: 19vw;
+    }
+    .img_edit{
+        width: 4vh;
+        height: 4vh;
+        position: absolute;
+        bottom: 1.7vh;
+        right: 0.4vh;
+    }
+}
+.allDetails{
+    margin-left: 3vw;
+    color: #0A2628;
+    box-sizing: border-box;
+    position: relative;
+}
+.details{
+    margin-top: 6%;
+    font-size: 0.85vw;
+    font-weight: 400;
+}
+.details div input{
+    background: none;
+    border: none;
+    font-size: 1.2vw;
+    border-bottom: 1px solid #373333;
+    width: 18vw;
+    outline: none;
+}
+.details div input[name='fullname']{
+    background: none;
+    border: none;
+    font-size: 1.2vw;
+    border-bottom: 1px solid #373333;
+    width: 40%;
+    outline: none;
+}
+
+.gender select{
+    background: none;
+    border: none;
+    font-size: 1em;
+    border-bottom: 1px solid #373333;
+    width: 18vw;
+    outline: none;
+}
+.gender select option{
+    background: #0A2628;
+    border: none;
+}
+.details.fullname{
+    margin-top: 4vh;
+}
+.details.city{
+    margin-right: 9.5%;
+}
+
+.phnblock .two{
+    position: absolute;
+    left: 63%;
+}
+
+.phnblock .details{
+    display: inline-block;
+}
+.phnblock .details div{
+    margin-top: 2vh;
+}
+
+
+
+.rects{
+    display: flex;
+    /* width: 80%; */
+    flex-wrap: wrap;
+    
+}
+.rects .rectangle{
+    box-sizing: border-box;
+    margin: 1vh 2.5% 1vh 0;
+    width: 200px;
+    height: 6vh;
+    padding: 1vh;
+    font-size: 0.9vw;
+    background-color: #0A262833;
+    border: 2px solid #0A2628;
+    border-radius: 10px;
+    text-align: center;
+}
+
+
+
+@media screen and (max-width: 760px){
+
+    .gender select{
+
+        font-size: 1em;
+        border-bottom: 1px solid #373333;
+        width: 70%;
+
+    }
+
+    .details.city{
+        margin-right: 0;
+    }
+
+    .save input {
+        min-width: 1vw;
+        width: 45%;
+        height: 6vh;
+        font-size: 2vw;
+        padding: 5px;
+        margin: 5vh 0 3vh 0;
+    }
+    .details div input[name='fullname']{
+        width: 70%;
+    }
+    
+    .details div input{
+        font-size: 3vw;
+        width: 70%;
+    }
+    .container-1{
+        background-color: #0A2628;
+        min-height: 100vh;
+        height: auto;
+        width: 100%;
+        height: 100%;
+        padding-bottom: 2%;
+    }
+    .sub-container{
+        width: 60%;
+        font-size: 20px;
+    }
+    .edit button{
+        min-width: 1vw;
+        top: 0;
+        right: 0;
+        font-size: 1vw;
+        font-weight: 600;
+        position: absolute;
+        width: fit-content;
+        height: fit-content;
+        display: inline-block;
+        padding: 5px;
+        margin: 2vh 3vw 0 0 ;
+    }
+    
+    .circle .username{
+        width: fit-content;
+        font-size: 3vw;
+        margin: 2vh auto auto auto;
+    }
+    .circle .ID{
+        width: fit-content;
+        margin: auto;
+        font-size: 2vw;
+       
+    }
+    .circle {
+        width: fit-content;
+        margin: auto;
+        margin-top: -10vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .circle img{
+        /* width: 60%; */
+        height: 15vh;
+        width: 15vh;
+        display: inline;
+        /* margin-left: 25% ; */
+    }
+    .allDetails{
+        margin-left: 5%;
+    }
+
+    .details{
+        margin-top: 6%;
+        font-size: 2vw;
+        font-weight: 400;
+    }
+    .details div{
+        margin-top: 2%;
+        font-size: 3vw;
+    }
+    .phnblock{
+        margin-top: 6%;
+    }
+    /* .details div{
+        margin-top: 2%;
+        font-size: 1.5em;
+    } */
+    .phnblock .two{
+        position: relative;
+        left: 0;
+        height: 5vh;
+    }
+    .phnblock .details {
+        display: block
+    }
+    .phnblock .details {
+        margin-bottom: 3vh;
+    }
+    .phnblock .details div{
+        margin-top: 1vh;
+    }
+    #id_fullname {
+        font-size: 3vw;
+    }
+}
+
+@media(max-width:450px){
+    .sub-container{
+        width: 75%;
+        font-size: 20px;
+    }
+    .circle {
+        margin-top: -8vh;
+
+    }
+    .circle img{
+        height: 13vh;
+        width: 13vh;
+        display: inline;
+    }
+    .img_edit{
+        width: 3vh;
+        height: 3vh;
+        position: absolute;
+        bottom: 1.7vh;
+        right: 0.4vh;
+    }
+}

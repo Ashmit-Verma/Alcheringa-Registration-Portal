@@ -1,0 +1,52 @@
+{% extends 'baseProfile.html' %}
+{% load static %}
+{% block title %}
+  <title>My Registrations</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins&family=Roboto&display=swap" rel="stylesheet" />
+  <link href="https://api.fontshare.com/css?f[]=satoshi@400,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/allEventsRegistered.css' %}" />
+{% endblock %}
+{% block content %}
+  <div class="main">
+    <div class="right-box">
+      <div class="box-nav">
+        <h1>My Registrations</h1>
+        <a href="{% url 'home' %}">
+          <div class="add-reg">
+            <p>+</p>Register
+          </div>
+        </a>
+      </div>
+
+      <div class="search-container">
+        <div class="team-no">Registered Competitions: {{ registered_competitions_count }}</div>
+      </div>
+
+      <div class="competitions-list">
+        {% for competition in competition_details_list %}
+          <div class="rectangle-group module1 competition-details">
+            <img src="{{ competition.url }}" />
+            <div class="competition-name">
+              <div class="details">
+                <h1>{{ competition.event_name }}</h1>
+                <h1>{{ competition.identify }}</h1>
+                <h5>{{ competition.event_short }}</h5>
+                <h5>{{ competition.solo_or_group }}</h5>
+
+              </div>
+              <div class="register-button">Registered</div>
+            </div>
+            <!--  <div class="competition-info">
+                        <h3>Competition Name</h3>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Praesentium delectus iusto minima. Commodi, aliquid voluptatum?</p>
+                        <div class="register-button"> <a> Register &nbsp; &#8599;</a> </div>
+                    </div>  -->
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

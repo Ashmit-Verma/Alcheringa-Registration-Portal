@@ -1,0 +1,83 @@
+{% extends "baseProfile.html" %}
+{% load static %}
+        {% block title %}
+        <title>My Profile</title>
+        {% endblock title %}
+        {% block content %}
+            <div class="sub-container">
+                <div class="circle">
+                    <img src="{{request.user.img.url}}">
+                    <div class="username">{{ request.user.username }}</div>
+                    <div class="ID">{{ request.user.alcherid }}</div>
+                </div>
+                <div class="edit">
+                    <a href="{%url 'profileedit'%}"><button type="button" >EDIT</button></a>
+                </div>
+                <div class="allDetails">
+                    <div class="details fullname">
+                        Full name*
+                        <div>{{ request.user.fullname }}</div>
+                    </div>
+
+                    <div class="details email">
+                        Email id*
+                        <div>{{ request.user.email }}</div>
+                    </div>
+
+                    <div class="phnblock">
+                        <div class="details">
+                            Phone no*
+                            <div>{{ request.user.phone_number }}</div>
+                        </div>
+                        <div class="details two">
+                            Alternate Phone no
+                            <div>{{ request.user.alternate_phone }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="details gender">
+                        Gender
+                        <div>{{ request.user.gender }}</div>
+                    </div>
+
+
+                    <div class="phnblock">
+
+                        <div class="details state">
+                            STATE
+                            <div>{{request.user.state}}</div>
+                        </div>
+                        <div class="details city two">
+                            CITY
+                            <div>{{ request.user.city }}</div>
+                        </div>
+        
+                    </div>
+
+                    <div class="phnblock">
+
+                        <div class="details college">
+                            COLLEGE
+                            <div>{{ request.user.collegename }}</div>
+                        </div>
+                        {% comment %} <div class="details teamname two">
+                            TEAM NAME
+                            <div>{{ request.user.teamname}}</div>
+                        </div> {% endcomment %}
+        
+                    </div>
+                    <!-- <div style="height:0px; overflow:hidden">
+                        {{form.interest}}</div> -->
+                    
+                    <!-- <div class="details ">
+                        INTEREST
+                        <div class="rects" id="chip-interest">
+                            <div class="rectangle">Module name</div>
+                            <div class="rectangle">Module name</div>
+                            <div class="rectangle">Module name</div>
+                            <div class="rectangle">Module name</div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        {% endblock content %}

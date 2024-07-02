@@ -1,0 +1,167 @@
+{% extends "baseProfile.html" %} {% load static %} {% block title %}
+<title>Add Team Member</title>
+<link rel="stylesheet" href="{% static 'css/add_member.css' %}" />
+{% endblock title %} {% block content %} 
+<style>
+    .name input::placeholder{
+        color:black;
+    }
+    .phone input::placeholder{
+        color:black;
+    }
+    .phone-comp{
+        display: flex;
+    }
+    #id_phone_number_0{
+        border:none;
+        width:5vw;
+        background-color: #b5bc89;
+    }
+    #id_phone_number_1{
+        width:20vw;
+    }
+    .email input::placeholder{
+        color:black;
+    }
+    .gender input::placeholder{
+        color:black;
+    }
+    @media(max-width:768px)
+    {
+        .name input::placeholder{
+        font-size:3vw;
+    }
+    .phone input::placeholder{
+        font-size:3vw;
+    }
+    .phone-comp{
+        display: flex;
+    justify-content: center;
+    }
+    #id_phone_number_0{
+        width:10%;
+        background-color: #b5bc89;
+        border-bottom: 1px solid #0a2628;
+    }
+    #id_phone_number_1{
+        width:70%;
+    }
+    .email input::placeholder{
+        font-size:2vw;
+    }
+    .gender input::placeholder{
+        font-size:2vw;
+    }
+
+    }
+</style>
+<div class="body">
+  <!-- 
+          {% for message in messages %}
+      <script>
+          alert("{{ message }}");
+      </script>
+  {% endfor %} -->
+  
+      <div class="team-container" style="position: relative;">
+          <!-- <a href="{{ referer }}" style="background-color:   #B5BC89;
+      color: #0A2628;
+      font-size: 20px;
+      padding-left: 1vw;
+      text-decoration: none;font-weight: bold;
+      position: absolute;left: 2px;
+      " class="back-button">Back</a> -->
+          <div class="header-text">
+              <h3>Team Members</h3>
+              <h4>Add Members</h4>
+          </div>
+          <div class="member-img">
+              <img src="{% static 'imgs/image 4.png' %}" alt="">
+          </div>
+          <div class="form-container">
+              <form action="" id="add_form" method="POST" >
+                  {% csrf_token %}
+                  <div class="name">
+                      Full Name*
+                      {{form.name}}
+                  </div>
+  
+                  <div class="email">
+                      Email ID*
+                      {{form.email}}
+                  </div>
+  
+                  <div class="phone">Phone Number*
+                     <div class="phone-comp"> {{form.phone_number}}</div>
+                  </div>
+  
+                  <div class="gender" >Gender
+                      {{form.gender}}
+        
+                      </select>
+                  </div>
+                  <br>
+      
+                  <div class="buttons-container">
+                      <button  type="submit">Add</button>
+                  </div>
+                  <!-- <div style="background-color: #B5BC89; 
+                              color: #000; 
+                              border: none; 
+                              padding: 10px 20px; 
+                              
+                              text-decoration: none;
+                              display: inline-block;
+                              font-size: 16px;
+                              bottom: 0;
+                              right: 0;
+                              cursor: pointer;" class="Button-Container">
+                      <button type="reset" style=">
+                          Cancel
+                      </button>
+                      <button type="submit" style="background-color: #B5BC89;
+                                          color: #0A2628;
+                                          font-size: 20px;
+                                          font-weight: bold;
+                                          padding: 5px 30px;">
+                          Add
+                      </button> -->
+                  </div>
+              </form>
+          </div>
+  
+      </div>
+      
+  </div>
+<script>
+    const form = document.querySelector('#add_form');
+    {% comment %} form.addEventListener("submit", function(event){
+        event.preventDefault();
+        fetch(form.action, {
+            method: "post",
+            body: new FormData(form)
+        }).then(function(){
+            window.history.back();
+        })
+    }); {% endcomment %}
+    {% comment %} let previous_page = document.referrer; {% endcomment %}
+    //form.setAttribute("action", `${previous_page}`);
+    {% comment %} function Redirect(){
+        window.history.back();
+    } {% endcomment %}
+    {% comment %} document.addEventListener("DOMContentLoaded", function () { {% endcomment %}
+        {% comment %} var messages = document.querySelectorAll(".errorlist");
+        if (messages.length > 0) {
+          var alertContainer = document.getElementById("alert-container");
+          function displayErrorMessage() {
+            alertContainer.style.display = "block";
+            for (var i = 0; i < messages.length; i++) {
+              alertContainer.innerHTML += messages[i].innerText;
+              alertContainer.innerHTML += "<br>";
+              
+            }
+          }
+        } {% endcomment %}
+      {% comment %} }); {% endcomment %}
+</script>
+{% endblock content %}

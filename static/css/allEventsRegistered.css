@@ -1,0 +1,353 @@
+/*
+html5doctor.com Reset Stylesheet
+v1.6.1
+Last Updated: 2010-09-17
+Author: Richard Clark - http://richclarkdesign.com
+Twitter: @rich_clark
+*/
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+  font-family: "Satoshi", sans-serif;
+}
+
+body {
+  line-height: 1;
+  background-color: #0a2628;
+}
+
+nav ul {
+  list-style: none;
+}
+
+.main {
+  display: flex;
+  /* flex-direction: row; */
+  justify-content: center;
+  /* align-items: center; */
+  margin: 10vh 0;
+}
+
+.right-box {
+  /* margin: 7vh; */
+  padding: 3vh;
+  min-height: 80vh;
+  width: 55vw;
+  background-color: #b5bc89;
+  font-family: "Satoshi", sans-serif;
+}
+
+.box-nav {
+  height: 5vh;
+  display: flex;
+  justify-content: space-between;
+  padding: 1.2vw;
+  padding-right: 2vw;
+  margin: 2vw 0 0 2vw;
+  align-items: center;
+  font-family: "Satoshi", sans-serif;
+}
+
+.box-nav h1 {
+  font-family: "Satoshi", sans-serif;
+  color: #0a2628;
+  font-size: 4vw;
+  font-weight: 600;
+}
+
+.box-nav a {
+  text-decoration: none;
+  cursor: pointer;
+}
+.add-reg {
+  width: 12vw;
+  display: flex;
+  font-size: 2vw;
+  font-family: "Satoshi", sans-serif;
+  font-weight: 500;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: #0a2628;
+  text-align: center;
+  padding: 1vw;
+}
+
+.add-reg p {
+  margin-right: 0.8vw;
+}
+
+.search-container {
+  display: flex;
+  justify-content: flex-end;
+  height: fit-content;
+  overflow: hidden;
+  padding: 1.2vw 2vw;
+}
+.search {
+  border-bottom: 2px solid black;
+  width: 35%;
+}
+.search input {
+  border: none;
+  outline: none;
+  background: none;
+  width: 90%;
+  font-size: 2vh;
+  padding: 0 6px 6px 0;
+}
+.search button {
+  float: right;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+.search button img {
+  width: 20px;
+}
+
+.team-no {
+  font-size: 2vw;
+  color: rgba(74, 80, 62, 1);
+  font-family: "Roboto", sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 0.4vw;
+  color: #0a2628;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 0.2vw grey;
+  border-radius: 0.5vw;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #0a2628;
+  border-radius: 0.6vw;
+}
+
+.search-members input[type="search"] :focus {
+  outline: none;
+}
+
+.competitions-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: 50vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1.2vw;
+  margin: 1.2vw;
+}
+
+.details h3,
+h5 {
+  font-family: "Roboto", sans-serif;
+}
+.rectangle-group {
+  width: 48%;
+  position: relative;
+  display: flex;
+
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  height: 15vw;
+  margin: 0 1vh 2vh 0;
+}
+.rectangle-group::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0.4) 80%
+  );
+}
+
+.rectangle-group img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+.competition-info {
+  background: #b5bc89;
+  display: flex;
+  flex-direction: column;
+  text-align: end;
+  justify-content: space-between;
+  align-items: end;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+  padding: 2vh;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50%; /* Adjust the width as needed */
+  opacity: 0;
+}
+
+.competition-name {
+  display: flex;
+  flex-direction: column;
+  text-align: end;
+  justify-content: space-between;
+  align-items: end;
+  color: white;
+
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50%; /* Adjust the width as needed */
+}
+
+/* .competition-info h3 {
+    font-size: 2vw;
+}
+.competition-info h4{
+    opacity: 0;
+    position: absolute;
+}
+.competition-info p{
+    font-size: 1vw;
+} */
+
+.register-button {
+  text-decoration: none;
+  color: white;
+  border-style: solid;
+  border-color: white;
+  border-width: 0.2vh;
+  margin: 2vh 1vw;
+  padding: 0.8vw;
+  font-size: 1vw;
+  font-weight: 500;
+  transition: background-color 0.3s ease-in-out;
+}
+/* .competition-name .register-button {
+    text-decoration: none;
+    color: white;
+    border-style: solid;
+    border-color: white;
+    border-width: 0.2vh;
+    padding: 1vw ;
+    
+    font-size: 2vw;
+    font-weight: 500;
+    transition: background-color 0.3s ease-in-out;
+} */
+
+.details {
+  height: 50%;
+  padding: 1vh;
+}
+.details h1 {
+  font-size: 2vw;
+  margin-bottom: 0.5vw;
+}
+.box-nav h1 {
+  margin-right: 3vw;
+}
+
+@media (max-width: 768px) {
+  .box-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5vh;
+  }
+  .competitions-list {
+    justify-content: center;
+  }
+  .rectangle-group {
+    width: 90%;
+    height: 25vw;
+    margin: 0;
+  }
+
+  .my-reg {
+    font-size: 3vh;
+  }
+  .main {
+    margin-left: 10vw;
+  }
+  .competition-info h3 {
+    font-size: 1.8vw;
+  }
+  .details h1 {
+    font-size: 5vw;
+  }
+  .competition-info p {
+    font-size: 1vw;
+  }
+  .register-button {
+    padding: 0vw 1vw;
+    font-size: 1vw;
+  }
+  .box-nav h1 {
+    font-size: 5vw;
+    margin-right: 1vw;
+  }
+  .add-reg {
+    padding: 1.5vw;
+    font-size: 3vw;
+    width: 17vw;
+  }
+  .register-button {
+    padding: 1vw;
+    font-size: 2vw;
+  }
+  .team-no {
+    font-size: 2.1vw;
+  }
+}
+@media (max-width: 500px) {
+  .row1,
+  .row2,
+  .row3,
+  .row4,
+  .row5,
+  .row6 {
+    flex-direction: column;
+    margin-bottom: 0;
+  }
+  .right-box {
+    margin-left: 0;
+    width: 70vw;
+  }
+  .rectangle-group {
+    width: 100%;
+    height: 150px;
+    margin-bottom: 3vw;
+  }
+  .competition-info h3 {
+    font-size: 1vw;
+  }
+
+  .register-button {
+    font-size: 3vw;
+  }
+  .competition-info p {
+    font-size: 1.5vw;
+  }
+  .team-no {
+    font-size: 3vw;
+  }
+}

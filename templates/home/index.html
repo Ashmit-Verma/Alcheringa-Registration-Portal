@@ -1,0 +1,384 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'imgs/Group 26.png'  %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/css?f[]=satoshi@400,700,900&display=swap" rel="stylesheet">
+
+    <!-- local Style sheets -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- bootstarp style CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body style="background-color: #0A2628;">
+    <div class="banner">
+        <div class="logo">
+            <a href="{% url 'home' %}"><img src="{% static 'imgs/logo.png' %}" alt="Alcher Logo"></a>
+        </div>
+        {% if user.is_authenticated %}
+        <div class="action">
+            <div class="profile" onclick="menuToggle();">
+                <img src="{{request.user.img.url}}" alt="profile">
+            </div>
+            <div class="menu">
+                <h3>{{user.username}}<br><span>{{user.fullname}}</span></h3>
+                <ul>
+                    <li><a href="{% url 'profile' %}">My Profile</a></li>
+                    <li><a href="{% url 'RegisteredEvents' %}">My Registrations</a></li>
+                    <li><a href="{% url 'TeamMembers' %}">Team Members</a></li>
+                    <li><a href="https://drive.google.com/file/d/1PAqqbBIwJYGvaWShECjWuQd9e1FuXh9E/view?usp=sharing" target="_blank">RuleBook</a></li>
+                    <li><img src="{% static 'imgs/home/logout.png' %}" alt="logout"><a
+                            href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+        <div class="banner-text">
+            <h1><span id="span1">ALCHERINGA</span> <br>Register for <br>the North East’s <span id="span2">largest cultural fest<span></h1>
+            {% comment %} <p class="desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error id accusamus excepturi
+                blanditiis modi? Neque doloribus nihil deserunt iusto necessitatibus. Vitae praesentium inventore fuga
+                beatae excepturi, libero minima voluptatum accusamus.</p> {% endcomment %}
+        </div>
+
+        <div class="loginBtn">
+            {% if user.is_authenticated %}
+
+            {% else %}
+            <button type="button">Login &nbsp <svg width="1.5vw" height="1.5vw" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="1.5"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect width="48" height="48" fill="white" fill-opacity="0.01"></rect> <path d="M19 11H37V29" stroke="#B5BC89" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M11.5441 36.4559L36.9999 11" stroke="#B5BC89" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></button>
+            {% endif %}
+        </div>
+        <div class="scrollbtn">
+            <a href="#Modules"><img src="{% static 'imgs/home/Rectangle 78.png' %}" alt=""></a>
+            <a href="#Competitions"><img src="{% static 'imgs/home/Rectangle 143.png' %}" alt=""></a>
+        </div>
+
+    </div>
+    <section>
+        <div class="text-wrapper1">
+            <div><img src="{% static 'imgs/home/vector.png' %}">Get Ready for the 28th edition of Alcheringa | Dates : 7th - 10th March 2024<img
+                    src="{% static 'imgs/home/vector.png' %}"></div>
+        </div>
+        <div class="text-wrapper2">
+            <div><span>Get Ready for</span><br> 28th edition of Alcheringa <br> Dates : 7th - 10th March 2024</div>
+        </div>
+    </section> 
+    <!-- Marquee Section Starts  -->
+
+
+    <section class="modules-section" id="Modules">
+        <div class="moduleContainer">
+            <h1 class="title1"> MODULES </h1>
+            <div class="modulecards">
+                {% for module in modules %}
+                <div class="module" onclick="filtermodule('{{module.id}}')" data-module-id="{{ module.id }}" id="{{module.id}}" style="background: url('{{module.module_icon.url}}'); background-repeat: no-repeat; background-size: cover;">
+                    {{module.module}}
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <div class="hr"></div>
+        <!-- <hr style="border-top: 2px solid rgb(255, 255, 255); width: 80%; margin-left: 10vw;"> -->
+
+
+        <div class="competitions" id="Competitions">
+            <div class="competitions-search">
+                <div class="heading-competitions">All Competitions</div>
+                <div class="search_competition">
+                    <input type="text" name="competitionName" placeholder="Search competitions" id="searchInput" onkeyup="performSearch()">
+                    <button type="submit"><img src="{% static 'imgs/search_icon.png' %}"></button>
+                </div>
+            </div>
+            <div class="compContainer">
+
+                {% for competition in competitions %}
+                <div class="rectangle-group module1 competition-details" data-module-id="{{ competition.module.id }}" >
+                    <img src="{{ competition.image.url }}">
+                    <div class="competition-name">
+                        <div class="details">
+                            <h3 class="eventName">{{ competition.event_name }}</h3>
+                            {% if competition.event_short %}
+                            <h5>{{ competition.event_short }}</h5>
+                            {% endif %}
+                            <h5>{{ competition.solo_or_group }}</h5>
+                            {% comment %} <h3 ><span>Prize worth</span> {{competition.prize_worth}}K+</h3> {% endcomment %}
+                            <h6 style="display: none;">{{competition.event_tags}}</h6>
+                        </div>
+                        <div class="register-button"> <a href="{% url 'registercomp' competition.id %}"> Register &nbsp; <svg width="1.5vw" height="1.5vw" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect width="48" height="48" fill="white" fill-opacity="0.01"></rect> <path d="M19 11H37V29" stroke="#F0F0F0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M11.5441 36.4559L36.9999 11" stroke="#F0F0F0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></a> </div>
+                    </div>
+                    <div class="competition-info">
+                        <div>
+                            <h3>{{ competition.event_name }}</h3>
+                            <p>{{ competition.event_desc }}</p>
+                            <a  href="{% url 'registercomp' competition.id %}" style="font-size: calc(0.2rem + 0.5vw);">Read More</a>
+                        </div>
+                        <div class="register-button"> <a href="{% url 'registercomp' competition.id %}"> Register &nbsp;
+                            <svg width="1.5vw" height="1.5vw" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="1.5"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect width="48" height="48" fill="white" fill-opacity="0.01"></rect> <path d="M19 11H37V29" stroke="#0A2628" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M11.5441 36.4559L36.9999 11" stroke="#0A2628" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></a> 
+                        </div>
+                    </div>
+                    <h3 class="prize_worth"><div><span>Prize worth</span> {{competition.prize_worth}}K+</div></h3>
+                </div>
+                {% endfor %}
+            </div>
+          
+        </div>
+    </section>
+
+    <section class="faqsection">
+        <div class="title">
+            <h2>FAQs</h2>
+        </div>
+        <div class="faq">
+            <div class="question">
+                <h3>What is the date of Alcheringa for this edition?</h3>
+                <span class="open active">+</span>
+                <span class="close">-</span>
+            </div>
+            <div class="answer">
+                <p>The 28th edition of Alcheringa will be held from 7th to 10th of March, the most awaited dates of the year 2024!</p>
+            </div>
+        </div>
+    
+        <div class="faq">
+            <div class="question">
+                <h3>How do I register for Alcheringa competitions?</h3>
+                <span class="open active">+</span>
+                <span class="close">-</span>
+            </div>
+            <div class="answer">
+                <p>
+                    Upon clicking on "REGISTER" in the website, and filling in all the mandatory personal details, your email will be verified.
+                    Then after logging in and providing us with a performance entry of yours in the respective competition which can be in the form
+                    of a YouTube link or a drive link or a form, you can register in the competition that you wish to take part in. You will also
+                    receive a confirmation mail from our end regarding the same, through the same mail id that you've entered.
+                </p>
+            </div>
+        </div>
+    
+        <div class="faq">
+            <div class="question">
+                <h3>What is the registration fee for participating in the competitions?</h3>
+                <span class="open active">+</span>
+                <span class="close">-</span>
+            </div>
+            <div class="answer">
+                <p>There is "NO" registration fee as such for any competition except for "PARLIAMENTARY DEBATE".</p>
+            </div>
+        </div>
+    
+        <div class="faq">
+            <div class="question">
+                <h3>What should I do after my registration is complete?</h3>
+                <span class="open active">+</span>
+                <span class="close">-</span>
+            </div>
+            <div class="answer">
+                <p>After successful registration, you should follow our social media handles for the updates and should wait for an email from our end,
+                    confirming your selection, for taking part in Alcheringa.</p>
+            </div>
+        </div>
+    
+        <div class="faq">
+            <div class="question">
+                <h3>What is an Alcher ID, and is it necessary to attend Alcheringa?</h3>
+                <span class="open active">+</span>
+                <span class="close">-</span>
+            </div>
+            <div class="answer">
+                <p>
+                    Alcher ID is generated upon registration inside the registration portal and is unique for every participant. It will be used to
+                    register for events, for confirming the participation, accommodation. Only those Participants with an Alcher ID will be allowed
+                    entry inside the campus during the festival.
+                </p>
+            </div>
+        </div>
+    
+        <div class="faq">
+            <div class="question">
+                <h3>Can I register for more than one competition?</h3>
+                <span class="open active">+</span>
+                <span class="close">-</span>
+            </div>
+            <div class="answer">
+                <p>YES, you are free to register in as many competitions as you are willing to.</p>
+            </div>
+        </div>
+    
+        <div class="faq">
+            <div class="question">
+                <h3>Are on-spot registrations allowed during the fest?</h3>
+                <span class="open active">+</span>
+                <span class="close">-</span>
+            </div>
+            <div class="answer">
+                <p>
+                    On-spot registrations are allowed, but won't guarantee you a slot in the competition. Your participation will only be allowed if we
+                    are left with any slots, and so we suggest you register online on our website beforehand.
+                </p>
+            </div>
+        </div>
+    
+        <div class="faq">
+            <div class="question">
+                <h3>Is there a campus Ambassador program for Alcheringa, what are their roles and responsibilities?</h3>
+                <span class="open active">+</span>
+                <span class="close">-</span>
+            </div>
+            <div class="answer">
+                <p>
+                    YES, the campus ambassador program of Alcheringa provides students with the chance to represent and promote the festival at their
+                    colleges and universities. Their responsibility includes increasing the reach of Alcheringa and promoting our events amongst
+                    students and wider public in their region, acting as a bridge between the two. To know more about the campus ambassador program visit
+                    ambassador.alcheringa.in
+                </p>
+            </div>
+        </div>
+    
+        <div class="faq">
+            <div class="question">
+                <h3>Are only college students eligible to participate?</h3>
+                <span class="open active">+</span>
+                <span class="close">-</span>
+            </div>
+            <div class="answer">
+                <p>NO, anyone with the respective skills and interest can participate considering that they are past the minimum age limit.</p>
+            </div>
+        </div>
+    
+        <div class="faq">
+            <div class="question">
+                <h3>Is accommodation provided for stay during the fest?</h3>
+                <span class="open active">+</span>
+                <span class="close">-</span>
+            </div>
+            <div class="answer">
+                <p>
+                    Yes, Accommodation facilities will be provided during the fest based on a first-come-first-serve basis. For further information
+                    about the accommodation availability and fees, refer to the rule booklet and be in contact with the team.
+                </p>
+            </div>
+        </div>
+    
+        <div class="faq">
+            <div class="question">
+                <h3>What are the date, time, venue details for the competitions?</h3>
+                <span class="open active">+</span>
+                <span class="close">-</span>
+            </div>
+            <div class="answer">
+                <p>
+                    The detailed schedule of the competition will be released later, before the onset of the fest, and you have to keep up with our
+                    social media handles to get the updates regarding the same.
+                </p>
+            </div>
+        </div>
+    
+        <div class="faq">
+            <div class="question">
+                <h3>Are there any competitions that are going to be held online in this edition?</h3>
+                <span class="open active">+</span>
+                <span class="close">-</span>
+            </div>
+            <div class="answer">
+                <p>
+                    Yes, there are. To get the details above these competitions, you are supposed to go through the rule booklet present on the
+                    website.
+                </p>
+            </div>
+        </div>
+    
+        <div class="faq">
+            <div class="question">
+                <h3>Will I receive a certificate for participating in Alcheringa?</h3>
+                <span class="open active">+</span>
+                <span class="close">-</span>
+            </div>
+            <div class="answer">
+                <p>Yes, every participant will be given a digital certificate of participation.</p>
+            </div>
+        </div>
+    
+        <div class="faq">
+            <div class="question">
+                <h3>Is there any entry fee for the pronites?</h3>
+                <span class="open active">+</span>
+                <span class="close">-</span>
+            </div>
+            <div class="answer">
+                <p>Those who are selected as participants will get a free entry to the pronites.</p>
+            </div>
+        </div>
+    </section>
+    {% comment %} <footer class="footer">
+        <div class="footer-left">
+            <img src="{% static 'imgs/home/Frame 167.png' %}" alt="Company logo">
+            <!-- <img src="{% static 'imgs/home/Vector_footer.png' %}" alt="Company logo"> -->
+        </div>
+        <div class="footer-right">
+            <a href="#"><img src="{% static 'imgs/home/Ellipse 24.png' %}" alt="Facebook icon"></a>
+            <a href="#"><img src="{% static 'imgs/home/Ellipse 24.png' %}" alt="Twitter icon"></a>
+            <a href="#"><img src="{% static 'imgs/home/Ellipse 24.png' %}" alt="Instagram icon"></a>
+            <a href="#"><img src="{% static 'imgs/home/Ellipse 24.png' %}" alt="LinkedIn icon"></a>
+        </div>
+    </footer> {% endcomment %}
+{% include 'footer.html'%}
+    {% comment %} <footer class="footer1">
+        <div class="end">
+          <div class="APD">
+            <div class="APD_content">
+              <p class="alcherLogoBottom"><img src="{% static 'imgs/Group 26.png'%}"></p>
+              <p class="alcherFooter">Alcheringa <br></p>
+            </div>
+          </div>
+    
+            <div class="contactFollow" id="Contact">
+               <div class="contactFollowContent">
+                <div class="ContactFollow Contact"><p class="contactus">Contact  us</p>
+                  <p class="pd">pd@alcheringa.in</p>
+                   +91 365124892</div>
+                </div>
+                <div class="contactFollow" id="contact">
+                    <div class="ContactFollow Follow">
+                        <p class = "Follow_head">Follow Us</p>
+                    </div>
+                    <div class = "logo">
+                        <p class = "bottom">
+                        <a href="https://www.instagram.com/alcheringaiitg/?hl=en"><img
+                        src="{% static 'imgs/icon.png'%}" class="top instagram"></a>
+                        </p>
+                        <p class = "bottom"><a href="https://www.youtube.com/channel/UCQfsLKaY4a1Mx75hnaZDoxw"><img
+                         src="{% static 'imgs/youtube.png'%}" class="top youtube"></a></p>
+                        <p class = "bottom"><a href="https://www.threads.net/@alcheringaiitg"><img src="{% static 'imgs/at-sign.png'%}"
+                        class="top threads"></a></p>
+                       <p class = "bottom"><a href="https://www.facebook.com/alcheringaiitg/"><img src="{% static 'imgs/facebook.png'%}"
+                       class="top facebook"></a></p>
+                    </div>                                     
+                </div>
+            </div>
+          <div class="copyright">
+            <p>COPYRIGHT © 2024 ALCHERINGA. ALL RIGHTS RESERVED<br>
+              Designed by Team Creatives. Developed by Team WebOps.</p>
+          </div>
+          </div>
+        </div>
+      </footer> {% endcomment %}
+
+    <script src="{% static 'js/home.js' %}"></script>
+    <!-- BootStrap js  -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
+
